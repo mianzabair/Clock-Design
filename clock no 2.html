@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *, *::after, *::before{
+            box-sizing: border-box;
+            /* font-family: sans-serif; */
+        }
+
+        body{
+            user-select: none;
+            background: linear-gradient(to right, hsl(200, 100%, 50%), hsl(175, 100%, 50%));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 90vh;
+            /* overflow: hidden; */
+        }
+        .clock{
+            width: 600px;
+            height: 600px;
+            background-color: rgba(248, 248, 248, 0.911);
+            border-radius: 50%;
+            border: 2px solid black;
+            position: relative;
+        }
+        .clock .number{
+            --rotation:0;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            /* background-color: red; */
+            transform: rotate(var(--rotation));
+            font-size: 1.7rem;
+            padding: 5px;
+        }
+        .clock .number1{ --rotation: 30deg; }
+        .clock .number2{ --rotation: 60deg; }
+        .clock .number3{ --rotation: 90deg; }
+        .clock .number4{ --rotation: 120deg; }
+        .clock .number5{ --rotation: 150deg; }
+        .clock .number6{ --rotation: 180deg; }
+        .clock .number7{ --rotation: 210deg; }
+        .clock .number8{ --rotation: 240deg; }
+        .clock .number9{ --rotation: 270deg; }
+        .clock .number10{ --rotation: 300deg; }
+        .clock .number11{ --rotation: 330deg; }
+
+        .clock .hand{
+            --rotation:0;
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+         
+            background-color: black;
+            border: 1px solid white;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            transform-origin: bottom;
+            z-index: 10;
+            transform: translateX(-50%) rotate(calc(var(--rotation) * 1deg));
+        }
+        .clock .hand.second{
+            width: 4px;
+            background-color: red;
+            height: 45%;
+        }
+        .clock .hand.minute{
+            width: 8px;
+            background-color: rgb(0, 0, 0);
+            height: 40%;
+        }
+        .clock .hand.hour{
+            width: 12px;
+            background-color: rgb(0, 0, 0);
+            height: 35%;
+        }
+        .clock::after{
+            content: '';
+            position: absolute;
+            background-color: black;
+            z-index: 11;
+            width: 18px;
+            height: 18px;
+            top:50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+        }
+       .clock p{
+            position:absolute;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            margin-top: 30%;
+            font-size: 1.3rem;
+            color: rgba(0, 0, 0, 0.747);
+        }
+        .clock #color{
+            color: red;
+            font-size: 2.1rem;
+        }
+        .clock .hour::after{
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 80px;
+            border-radius: 100%;
+            right: -100%;
+            background-color: rgb(0, 0, 0);
+            top: 30%;
+        }
+        .clock .minute::after{
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 50px;
+            border-radius: 90%;
+            right: -100%;
+            background-color: rgb(0, 0, 0);
+            top:20%;
+        }
+        
+        .clock .minute::before{
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 50px;
+            border-radius: 90%;
+            right: -100%;
+            background-color: rgb(0, 0, 0);
+            top: 50%;
+        }
+    
+    
+
+
+
+    </style>
+</head>
+<body>
+    <div class="clock">
+        <P>Mian Zabair</P>
+        <div class="hand hour" date-hour-hand></div>
+        <div class="hand minute " date-minute-hand></div>
+        <div class="hand second"  date-second-hand></div>
+        <div class="number number1">I</div>
+        <div class="number number2">I</div>
+        <div class="number number3" id="color">III</div>
+        <div class="number number4">I</div>
+        <div class="number number5">I</div>
+        <div class="number number6" id="color">III</div>
+        <div class="number number7">I</div>
+        <div class="number number8">I</div>
+        <div class="number number9" id="color">III</div>
+        <div class="number number10">I</div>
+        <div class="number number11">I</div>
+        <div class="number number12" id="color">III</div>
+    </div>
+
+
+    <script>
+        setInterval(setClock, 1000)
+
+        const hourHand = document.querySelector('[date-hour-hand]')
+        const minuteHand = document.querySelector('[date-minute-hand]')
+        const secondHand = document.querySelector('[date-second-hand]')
+
+
+        function setClock(){
+            const currentDate = new Date()
+            const secondsRatio = currentDate.getSeconds() / 60
+            const minutesRatio = (secondsRatio + currentDate.getMinutes()) / 60
+            const hoursRatio = (minutesRatio + currentDate.getHours()) / 12
+
+            setRatation(secondHand, secondsRatio)
+            setRatation(minuteHand, minutesRatio)
+            setRatation(hourHand, hoursRatio)
+        }
+
+        function setRatation(element, rotationRatio){
+            element.style.setProperty('--rotation', rotationRatio * 360)
+        }
+
+        setClock()
+
+    </script>
+</body>
+</html>
